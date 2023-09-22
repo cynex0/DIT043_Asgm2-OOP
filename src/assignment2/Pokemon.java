@@ -1,4 +1,6 @@
-package assignment2;/*
+package assignment2;
+
+/*
 Each pokemon has a name, a maximum health points (MAX HP), energy points (EP), a single skill (Task 2), and a type.
 A pokemon can be one of four types: Fire, Water, Grass and Normal. When created, the EP always starts at 100, and the
 pokemon does not know any skill. On the other hand, the name, MAX HP and type must be specified.
