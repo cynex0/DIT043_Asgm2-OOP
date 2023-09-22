@@ -30,23 +30,45 @@ public class Pokemon {
         public String toString() {
             return TYPE_NAME;
         }
-    }
 
+    }
     private String name;
     private final int maxHp; // assigned once and can't be changed
-    private int hp; // 0..maxHP, can be changed only as a result of an attack
-    private int ep; // 0..100, can be changed only as a result of an attack
+    private int currentHp; // 0..maxHP, can be changed only as a result of an attack
+
+    private int energy; // 0..100, can be changed only as a result of an attack
     // TODO: Task 2
     // Skill skill;
-    final PokemonType type;
-
+    private final PokemonType type;
     public Pokemon(String name, int maxHP, String type) {
         this.name = name;
         this.maxHp = maxHP;
         this.type = PokemonType.valueOf(type);
 
-        this.ep = 100;
-        this.hp = this.maxHp;
+        this.energy = 100;
+        this.currentHp = this.maxHp;
+    }
+    public int getEnergy() {
+        return this.energy;
+    }
+    public int getCurrentHP() {
+        return this.currentHp;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getType() {
+        return this.type.toString();
+    }
+
+    public int getMAX_HP() {
+        return this.maxHp;
+    }
+
+    public void learnSkill(String name, int ap, int ec) {
+
     }
 
     public String toString(){
@@ -64,14 +86,8 @@ public class Pokemon {
         return (this.name.equals(other.name)) &&
                 (this.type.equals(other.type)) &&
                 (this.maxHp == other.maxHp) &&
-                (this.hp == other.hp) &&
-                (this.ep == other.ep);
-    }
-
-    public static void main(String[] args) {
-        Pokemon pokemon = new Pokemon("Name", 12, "Water");
-        Pokemon pokemon2 = new Pokemon("Name", 12, "Water");
-        System.out.println(pokemon.equals(pokemon2));
+                (this.currentHp == other.currentHp) &&
+                (this.energy == other.energy);
     }
 }
 
