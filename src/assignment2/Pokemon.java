@@ -1,11 +1,11 @@
-/*
+package assignment2;/*
 Each pokemon has a name, a maximum health points (MAX HP), energy points (EP), a single skill (Task 2), and a type.
 A pokemon can be one of four types: Fire, Water, Grass and Normal. When created, the EP always starts at 100, and the
 pokemon does not know any skill. On the other hand, the name, MAX HP and type must be specified.
 
-Pokemon also have current health points (HP), which can change, but not their maximum health points (MAX HP). In fact,
+assignment2.Pokemon also have current health points (HP), which can change, but not their maximum health points (MAX HP). In fact,
 a pokemon’s current HP cannot be less than zero, or greater than its MAX HP. Similarly, EP can never be less than zero
-or greater than 100. When creating a Pokemon, its current HP and current EP are the same value as their corresponding
+or greater than 100. When creating a assignment2.Pokemon, its current HP and current EP are the same value as their corresponding
 maximum HP and EP. From now, we use HP to refer to the current HP and MAX HP to refer to the maximum health points.
 
 After creation, we can change the name of a pokemon but not its type or MAX HP. Also, we cannot set its HP and EP to a
@@ -16,25 +16,35 @@ return one of two options below
 */
 
 public class Pokemon {
-    public enum Type {
-        fire, water, grass, normal
+    public enum PokemonType {
+        FIRE("Fire"), WATER("Water"), GRASS("Grass"), NORMAL("Normal");
+
+        final String TYPE_NAME;
+
+        PokemonType(String typeName) {
+            this.TYPE_NAME = typeName;
+        }
+
+        public String toString() {
+            return TYPE_NAME;
+        }
     }
 
-    String name;
-    private final int MAX_HP;
-    private int hp; // 0..maxHP
-    private int ep; // 0..100
+    private String name;
+    private final int maxHp; // assigned once and can't be changed
+    private int hp; // 0..maxHP, can be changed only as a result of an attack
+    private int ep; // 0..100, can be changed only as a result of an attack
     // TODO: Task 2
     // Skill skill;
-    final Type type;
+    final PokemonType type;
 
-    Pokemon(String name, int maxHP, Type type) {
+    public Pokemon(String name, int maxHP, String type) {
         this.name = name;
-        this.MAX_HP = maxHP;
-        this.type = type;
+        this.maxHp = maxHP;
+        this.type = PokemonType.valueOf(type);
 
         this.ep = 100;
-        this.hp = this.MAX_HP;
+        this.hp = this.maxHp;
     }
 
     public String toString(){
@@ -43,17 +53,22 @@ public class Pokemon {
     }
 
     public boolean equals(Object o) {
-        Pokemon other = (Pokemon) o;
+        if (o == this)
+            return true;
+        if (!(o instanceof Pokemon))
+            return false;
+
+        Pokemon other = (Pokemon)o;
         return (this.name.equals(other.name)) &&
                 (this.type.equals(other.type)) &&
-                (this.MAX_HP == other.MAX_HP) &&
+                (this.maxHp == other.maxHp) &&
                 (this.hp == other.hp) &&
                 (this.ep == other.ep);
     }
 
     public static void main(String[] args) {
-        Pokemon pokemon = new Pokemon("Name", 12, Type.water);
-        Pokemon pokemon2 = new Pokemon("Name", 12, Type.water);
+        Pokemon pokemon = new Pokemon("Name", 12, "Water");
+        Pokemon pokemon2 = new Pokemon("Name", 12, "Water");
         System.out.println(pokemon.equals(pokemon2));
     }
 }
