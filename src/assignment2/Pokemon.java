@@ -24,17 +24,17 @@ public class Pokemon {
     private final int maxHp; // assigned once and can't be changed
     private int currentHp; // 0..maxHP, can be changed only as a result of an attack
     private int energy; // 0..100, can be changed only as a result of an attack
-    // TODO: Task 2
-    // Skill skill;
+    private Skill skill;
     private final PokemonType type;
 
     public Pokemon(String name, int maxHP, String type) {
         this.name = name;
         this.maxHp = maxHP;
-//        this.type = PokemonType.valueOf(type.toUpperCase());
 
         this.energy = MAX_ENERGY;
         this.currentHp = this.maxHp;
+
+        this.skill = null;
 
         switch(type) {
             case "Fire" -> this.type = PokemonType.FIRE;
@@ -48,27 +48,28 @@ public class Pokemon {
     public int getEnergy() {
         return this.energy;
     }
+
     public int getCurrentHP() {
         return this.currentHp;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getType() {
         if (this.type == null) {
             return "undefined";
         }
         return this.type.toString();
     }
+
     public int getMAX_HP() {
         return this.maxHp;
-    }
-
-    public void learnSkill(String name, int ap, int ec) {
-
     }
 
     public String attack(Pokemon other) {
@@ -95,22 +96,39 @@ public class Pokemon {
         }
     }
 
+    public boolean knowsSkill() {
+        return (skill != null); // false if skill is null, true otherwise
+    }
+
+    public void learnSkill(String name, int ap, int ec) {
+        skill = new Skill(name, ap, ec);
+    }
+
+    public void forgetSkill() {
+        skill = null;
+    }
+
+
     public String useItem(Item item){
         if (this.currentHp == this.maxHp) {
              return this.name + "could not use" + item.getName() + ". HP is already full.";
         }
+
         int hpBefore = this.currentHp;
         this.currentHp += item.getHealingPower();
         if (this.currentHp > this.maxHp) {
             this.currentHp = maxHp;
         }
-        return this.name + " used " + item.getName() + ". It healed " + (this.currentHp - hpBefore) + " HP.";
 
+        return this.name + " used " + item.getName() + ". It healed " + (this.currentHp - hpBefore) + " HP.";
     }
 
-    public String toString(){
-        // if no skill
-        return String.format("%s (%s)", this.name, this.type);
+    public String toString() {
+        if (this.knowsSkill()) {
+            return String.format("%s (%s). Knows %s", this.name, this.type, this.skill.toString());
+        } else {
+            return String.format("%s (%s)", this.name, this.type);
+        }
     }
 
     public boolean equals(Object object) {
