@@ -4,16 +4,24 @@ public class Item {
     private final String name;
     private final int healingPower;
     private final double itemWeight;
+
     public Item(String name, int power, double weight) {
         this.name = name;
         this.healingPower = power;
         this.itemWeight = weight;
     }
+    public String getName(){
+        return this.name;
+    }
+    public int getHealingPower() {
+        return this.healingPower;
+    }
 
     public String toString(){
-        int weightInt = (int)(itemWeight*100);
+        int weightInt = (int)(this.itemWeight*100);
         double truncatedWeight = weightInt / 100.0;
-        return String.format("%s heals %d HP. (%.2f)", name, healingPower, truncatedWeight);
+        return String.format("%s heals %d HP. (%.2f)",
+                this.name, this.healingPower, truncatedWeight);
     }
 
     public boolean equals(Object object) {

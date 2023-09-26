@@ -95,6 +95,19 @@ public class Pokemon {
         }
     }
 
+    public String useItem(Item item){
+        if (this.currentHp == this.maxHp) {
+             return this.name + "could not use" + item.getName() + ". HP is already full.";
+        }
+        int hpBefore = this.currentHp;
+        this.currentHp += item.getHealingPower();
+        if (this.currentHp > this.maxHp) {
+            this.currentHp = maxHp;
+        }
+        return this.name + " used " + item.getName() + ". It healed " + (this.currentHp - hpBefore) + " HP.";
+
+    }
+
     public String toString(){
         // if no skill
         return String.format("%s (%s)", this.name, this.type);
