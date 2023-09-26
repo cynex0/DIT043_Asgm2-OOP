@@ -36,13 +36,7 @@ public class Pokemon {
 
         this.skill = null;
 
-        switch(type) {
-            case "Fire" -> this.type = PokemonType.FIRE;
-            case "Water" -> this.type = PokemonType.WATER;
-            case "Grass" -> this.type = PokemonType.GRASS;
-            case "Normal" -> this.type = PokemonType.NORMAL;
-            default -> this.type = null; // for invalid inputs
-        }
+        this.type = PokemonType.valueOf(type.toUpperCase());
     }
 
     public int getEnergy() {
@@ -57,12 +51,16 @@ public class Pokemon {
         return this.name;
     }
 
+    public boolean isFainted() {
+        return (this.currentHp == 0);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public String getType() {
-        if (this.type == null) {
+        if (this.type == null) { // to avoid a NullPointerException if wrong type is specified
             return "undefined";
         }
         return this.type.toString();
@@ -73,7 +71,62 @@ public class Pokemon {
     }
 
     public String attack(Pokemon other) {
-        return "PLACEHOLDER";
+        String message = "";
+
+        // Fail checks
+        if (this.isFainted()) {
+            message = "Attack failed. " + this.name + " fainted.";
+        }
+        else if (other.isFainted()) {
+            message = "Attack failed. " + other.getName() + " fainted.";
+        }
+
+        else if (!this.knowsSkill()) {
+            message = "Attack failed. " + this.name + " does not know a skill.";
+        }
+        else if (this.energy < this.skill.getEnergyCost()) {
+            message = String.format("Attack failed. %s lacks energy: %d/%d",
+                                 this.name, this.energy, this.skill.getEnergyCost());
+        }
+        else { // both not fainted, knows skill, has enough energy -> successfull attack
+            String effectMessage = "";
+            String faintMessage = "";
+
+            double multiplier = PokemonType.getDamageMultiplier(this.getType(), other.getType());
+
+            if (multiplier == 2.0) {
+                effectMessage = " It is super effective!";
+            } else if (multiplier == 0.5){
+                effectMessage = " It is not very effective...";
+            }
+
+            other.receiveDamage((int)(this.skill.getAttackPower() * multiplier));
+            this.energy -= this.skill.getEnergyCost();
+            if (this.energy < 0) {
+                this.energy = 0;
+            }
+
+            if (other.isFainted()) {
+                faintMessage = " " + other.getName() + " faints.";
+            }
+
+
+            // <attacker> uses <skill name> on <target>. <opt_effect>\n
+            // <target> has <target_hp> HP left. <opt_faints>
+            message = String.format("%s uses %s on %s.%s%n%s has %d HP left.%s",
+                                    this.name, this.skill.getName(), other.name, effectMessage,
+                                    other.getName(), other.getCurrentHP(), faintMessage);
+        }
+
+        return message;
+    }
+
+    public void receiveDamage(int dmg) {
+        this.currentHp -= dmg;
+
+        if (this.currentHp < 0){
+            this.currentHp = 0;
+        }
     }
 
     public void rest() {
@@ -108,10 +161,9 @@ public class Pokemon {
         skill = null;
     }
 
-
     public String useItem(Item item){
         if (this.currentHp == this.maxHp) {
-             return this.name + "could not use" + item.getName() + ". HP is already full.";
+             return this.name + " could not use " + item.getName() + ". HP is already full.";
         }
 
         int hpBefore = this.currentHp;
