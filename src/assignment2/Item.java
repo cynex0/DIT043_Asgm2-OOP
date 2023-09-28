@@ -10,9 +10,15 @@ public class Item {
         this.healingPower = power;
         this.itemWeight = weight;
     }
+
     public String getName(){
         return this.name;
     }
+
+    public double getItemWeight(){
+        return this.itemWeight;
+    }
+
     public int getHealingPower() {
         return this.healingPower;
     }
@@ -41,9 +47,3 @@ public class Item {
                (this.itemWeight == other.itemWeight);
     }
 }
-
-// 213.126  *100
-// 21312,6  (int)
-// 21312    /100
-// 213,12   (double)
-
