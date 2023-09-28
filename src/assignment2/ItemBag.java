@@ -11,7 +11,6 @@ public class ItemBag {
         this.maxWeight = maxWeight;
         this.currentWeight = 0.0;
         this.items = new ArrayList<Item>();
-
     }
 
     public double getMaxWeight() {
@@ -38,11 +37,9 @@ public class ItemBag {
         }
 
         int index = 0;
-        for(int i = 0; i <= items.size(); i++){
-            if(item.getItemWeight() >= items.get(i).getItemWeight()){
-                index = i;
-                break;
-            }
+        // go through the array until we find an item in the array that is lighter than the new item
+        while (index < items.size() && items.get(index).getItemWeight() > item.getItemWeight()) {
+            index++;
         }
 
         items.add(index, item);
@@ -55,17 +52,24 @@ public class ItemBag {
             return null;
         }
 
+        this.currentWeight = this.currentWeight - items.get(index).getItemWeight();
         return items.remove(index);
-
-
     }
+
     public String peekItemAt(int index){
-        if(index >= items.size()){
-            return null;
+        if((items.isEmpty()) || (index < 0) || (index >= items.size())){
+            return "";
         }
         return items.get(index).toString();
     }
+
     public Item popItem(){
-        return items.remove(0);
+        if (items.isEmpty()) {
+            return null;
+        }
+
+        Item item = items.remove(0);
+        this.currentWeight = this.currentWeight - item.getItemWeight();
+        return item;
     }
 }
