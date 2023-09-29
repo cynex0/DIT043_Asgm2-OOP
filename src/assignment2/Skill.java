@@ -13,18 +13,20 @@ public class Skill {
         this.energyCost = energyCost;
     }
 
+    // getters
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getAttackPower() {
-        return attackPower;
+        return this.attackPower;
     }
 
     public int getEnergyCost() {
-        return energyCost;
+        return this.energyCost;
     }
 
+    // overrides
     public boolean equals(Object object) {
         if (object == this) {
             return true;
@@ -37,12 +39,15 @@ public class Skill {
         }
 
         Skill other = (Skill)object;
+
+        // Two skills are equal if they have the same names, APs and energy costs.
         return (this.name.equals(other.name)) &&
                (this.attackPower == other.attackPower) &&
                (this.energyCost == other.energyCost);
     }
 
     public String toString() {
+        // <skill name> - AP: <ap> EC: <ec>
         return String.format("%s - AP: %d EC: %d", this.name, this.attackPower, this.energyCost);
     }
 }

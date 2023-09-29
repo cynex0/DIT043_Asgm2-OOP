@@ -11,11 +11,12 @@ public class Item {
         this.itemWeight = weight;
     }
 
-    public String getName(){
+    // getters
+    public String getName() {
         return this.name;
     }
 
-    public double getItemWeight(){
+    public double getItemWeight() {
         return this.itemWeight;
     }
 
@@ -23,11 +24,15 @@ public class Item {
         return this.healingPower;
     }
 
-    public String toString(){
-        int weightInt = (int)(this.itemWeight*100);
+    // overrides
+    public String toString() {
+        // truncate to 2 decimal points
+        int weightInt = (int)(this.itemWeight * 100);
         double truncatedWeight = weightInt / 100.0;
+
+        // <item name> heals <heal power> HP. (<weight>)
         return String.format("%s heals %d HP. (%.2f)",
-                this.name, this.healingPower, truncatedWeight);
+                             this.name, this.healingPower, truncatedWeight);
     }
 
     public boolean equals(Object object) {
@@ -42,8 +47,10 @@ public class Item {
         }
 
         Item other = (Item)object;
+
+        // Two items are equals if they have the same name, healing power and weight values.
         return (this.name.equals(other.name)) &&
-               (this.healingPower == other.healingPower)&&
+               (this.healingPower == other.healingPower) &&
                (this.itemWeight == other.itemWeight);
     }
 }

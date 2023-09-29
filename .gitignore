@@ -28,4 +28,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### project-specific ###
 **/src/assignment2.zip
+**/src/assignment2/*.txt

@@ -7,69 +7,69 @@ public class ItemBag {
     private final double maxWeight;
     private double currentWeight;
 
-    public ItemBag(double maxWeight){
+    public ItemBag(double maxWeight) {
         this.maxWeight = maxWeight;
         this.currentWeight = 0.0;
         this.items = new ArrayList<Item>();
     }
 
+    // getters
     public double getMaxWeight() {
-        return maxWeight;
+        return this.maxWeight;
     }
 
     public double getCurrentWeight() {
-        return currentWeight;
+        return this.currentWeight;
     }
 
     public int getNumOfItems() {
-        return items.size();
+        return this.items.size();
     }
 
-    public int addItem(Item item){
-        if( item.getItemWeight() + currentWeight > maxWeight){
+
+    public int addItem(Item newItem) {
+        double newWeight = newItem.getItemWeight() + this.currentWeight;
+        if (newWeight > this.maxWeight){
             return -1;
         }
 
-        if (items.isEmpty()) {
-            items.add(item);
-            this.currentWeight = this.currentWeight + item.getItemWeight();
-            return 0;
-        }
+        this.currentWeight = newWeight;
 
         int index = 0;
-        // go through the array until we find an item in the array that is lighter than the new item
-        while (index < items.size() && items.get(index).getItemWeight() > item.getItemWeight()) {
+        // go through the array until we find an item in the array that is lighter than the new item, keep that index
+        while (index < items.size() && items.get(index).getItemWeight() > newItem.getItemWeight()) {
             index++;
         }
 
-        items.add(index, item);
-        this.currentWeight = this.currentWeight + item.getItemWeight();
+        items.add(index, newItem); // allows adding to index 0 even if the list is empty (size 0)
         return index;
     }
 
-    public Item removeItemAt(int index){
-        if(index >= items.size()){
+    public Item removeItemAt(int index) {
+        if ((items.isEmpty()) || (index < 0) || (index >= items.size())){
             return null;
         }
 
-        this.currentWeight = this.currentWeight - items.get(index).getItemWeight();
-        return items.remove(index);
+        Item removedItem = items.remove(index);
+        this.currentWeight = this.currentWeight - removedItem.getItemWeight();
+        return removedItem;
     }
 
-    public String peekItemAt(int index){
-        if((items.isEmpty()) || (index < 0) || (index >= items.size())){
+    public String peekItemAt(int index) {
+        if ((items.isEmpty()) || (index < 0) || (index >= items.size())){
             return "";
         }
+
         return items.get(index).toString();
     }
 
-    public Item popItem(){
+    public Item popItem() {
         if (items.isEmpty()) {
             return null;
         }
 
-        Item item = items.remove(0);
-        this.currentWeight = this.currentWeight - item.getItemWeight();
-        return item;
+        Item poppedItem = items.remove(0);
+        this.currentWeight = this.currentWeight - poppedItem.getItemWeight();
+        return poppedItem;
     }
 }
