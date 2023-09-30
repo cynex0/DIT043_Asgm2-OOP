@@ -1,0 +1,11 @@
+Gabriela - Changes caused by Task 8 - Pokemon, Items
+
+The pokemon constructor had to be changed, because of new types (so that new types would be allowed).
+Before the change we had a switch with 4 cases, afterwards it needed to be changed into a switch with 8 cases.
+
+During the code review together, we have decided that switch could be changed to something shorter, 
+we explored the possible options and realized that the valueOf() function of enums can be applied. 
+We found the valueOf() function in Java docs, when researching enums.
+
+My class (Items) did not have to change, because it had a single responsibility of creating items and returning
+values of the objects, which meant it was independent from the PokemonType class.

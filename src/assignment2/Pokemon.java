@@ -44,9 +44,6 @@ public class Pokemon {
     }
 
     public String getType() {
-        if (this.type == null) { // to avoid a NullPointerException if wrong type is specified
-            return "undefined";
-        }
         return this.type.toString();
     }
 
@@ -159,6 +156,7 @@ public class Pokemon {
 
     public String useItem(Item item) {
         if (this.currentHp == this.maxHp) {
+            // <poke name> could not use <item name>. HP is already full.
              return this.name + " could not use " + item.getName() + ". HP is already full.";
         }
 
@@ -168,6 +166,7 @@ public class Pokemon {
             this.currentHp = maxHp;
         }
 
+        // <poke name> used <item name>. It healed <amount healed> HP.
         return this.name + " used " + item.getName() + ". It healed " + (this.currentHp - hpBefore) + " HP.";
     }
 

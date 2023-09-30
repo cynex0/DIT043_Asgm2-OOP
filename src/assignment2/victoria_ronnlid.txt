@@ -1,0 +1,14 @@
+Victoria - Changes prompted by task 8 - Multiplier
+
+Before the change the multiplier calculation was a part of the attack() function and it worked well in terms of readability and simplicity, 
+because there were only 6 different combinations. 
+But as a result of the change there were now a lot more cases to handle, which made the readability low if it would be kept in the attack() 
+function and it would not be an optimal and clean solution.
+To solve this i moved the responsibility to the PokemonType enum instead, since the multiplier is based on types it made sense to make it the 
+responsibility of PokemonType class to determine the multiplier value, as it is based only on the types and could be potentially used in something
+else besides attack(). 
+
+After moving it, the multiplier had to be modified to handle all the new cases, and the initial intemplementation was to 
+experiment with if-else statements, but i realized this solution could be made more effective and more clean, 
+and we started researching to determine what would be the best. 
+And since the PokemonType class was Maksims responsibility, he started working on this as well. 

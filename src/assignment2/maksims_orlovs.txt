@@ -1,0 +1,18 @@
+Maksims - Changes caused by Task 8 - PokemonType
+
+The change request caused significant modifications to the PokemonType enum. Other classes
+remained untouched, as we kept single responsibility principle in mind from the get-go. 
+The types were already implemented as a basic enum before the change request, however, since
+there were now many more types, the responsibility of converting the type into a string when 
+printing was moved from the Pokemon class to the enum, using a constructor and toString().
+
+Since the multiplier calculation getDamageMultiplier() was now a method of PokemonType, it was 
+now my responsibility to maintain that method. The initial implementation using nested conditionals 
+was difficult to read and maintain, which is why I decided to look for a better way. The table 
+given in the task description resembled a matrix, which is why I decided to look for a way of 
+making a  constant matrix work. I found that it could be done using enum constant ordinals, which now
+required the enum constants to be in a specific order. This implementation is much cleaner and 
+(likely) performs better, as no comparisons are required. It can also be easily modified because 
+it is written as a table in code.
+
+Overall, the changes prompted by the request made our code cleaner and more future-proof.
