@@ -41,9 +41,9 @@ public class Skill {
         Skill other = (Skill)object;
 
         // Two skills are equal if they have the same names, APs and energy costs.
-        return (this.name.equals(other.name)) &&
-               (this.attackPower == other.attackPower) &&
-               (this.energyCost == other.energyCost);
+        return (this.name.equals(other.getName())) &&
+               (this.attackPower == other.getAttackPower()) &&
+               (this.energyCost == other.getEnergyCost());
     }
 
     public String toString() {

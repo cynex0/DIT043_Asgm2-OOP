@@ -49,8 +49,8 @@ public class Item {
         Item other = (Item)object;
 
         // Two items are equals if they have the same name, healing power and weight values.
-        return (this.name.equals(other.name)) &&
-               (this.healingPower == other.healingPower) &&
-               (this.itemWeight == other.itemWeight);
+        return (this.name.equals(other.getName())) &&
+               (this.healingPower == other.getHealingPower()) &&
+               (this.itemWeight == other.getItemWeight());
     }
 }

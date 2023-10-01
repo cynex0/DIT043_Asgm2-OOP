@@ -192,11 +192,11 @@ public class Pokemon {
         Pokemon other = (Pokemon)object;
 
         // Two pokemons are equal if they have the same name, type, skill, HP, MAX HP, and EP.
-        return (this.name.equals(other.name)) &&
-               (this.type == other.type) && // can be used instead of .equals(), avoids NullPointerException (JLS 8.9.1)
-               (this.maxHp == other.maxHp) &&
-               (this.currentHp == other.currentHp) &&
-               (this.energy == other.energy);
+        return (this.name.equals(other.getName())) &&
+               (this.getType().equals(other.getType())) &&
+               (this.maxHp == other.getMAX_HP()) &&
+               (this.currentHp == other.getCurrentHP()) &&
+               (this.energy == other.getEnergy());
     }
 }
 
